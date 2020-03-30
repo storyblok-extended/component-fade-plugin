@@ -1,4 +1,4 @@
-# Storyblok Field-Type Plugin for Spacing
+# Storyblok Field-Type Plugin for Fading components
 
 ## Project setup
 ```
