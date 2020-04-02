@@ -1,90 +1,125 @@
 <template>
   <div class="container">
-    <h5>intersection observer settings</h5>
-    <div class="uk-margin">
-      <div>
-        <label for="threshold">Threshold</label>
-      </div>
-      <input class="uk-range" type="range" v-model="model.config.threshold" min="0" max="1" step="0.1">
-      <span class="uk-range--label">{{ model.config.threshold }}</span>
-    </div>
-    <div class="uk-margin">
-      <select class="uk-select" v-model="model.type">
-        <option disabled value="">Please select one</option>
-        <option>classnames</option>
-        <option>inline styles</option>
-      </select>
-    </div>
-    <div v-if="model.type === 'classnames'">
-      <div>
+    <h5 class="intersection-observer-settings__heading">
+      Intersection observer settings
+    </h5>
+    <div class="intersection-observer-settings">
+      <div class="uk-margin">
         <div>
-          <label for="effects">Effect name</label>
+          <label for="threshold">Threshold</label>
         </div>
         <input
-          class="uk-input"
-          type="text"
-          @change="onEffectChange"
-          id="effects"
-          name="effects"
+          class="uk-range"
+          type="range"
+          v-model="model.config.threshold"
+          min="0"
+          max="1"
+          step="0.1"
         />
-        <p v-if="model.classNames">
-          Now you have to create classes: <br />
-          <strong>.{{ model.classNames.before }}</strong> <br />
-          <strong>.{{ model.classNames.after }} </strong><br />
-          with your custom transitions
-        </p>
-        <h5>here you can define simple transition variables</h5>
-        <div class="uk-margin">
-          <div>
-            <label for="duration">duration (ms)</label>
-          </div>
-          <input
-            v-model="model.transitionConfig.duration"
-            class="uk-input"
-            type="number"
-            id="duration"
-            name="duration"
-          />
+        <span class="uk-range--label">{{ model.config.threshold }}</span>
+      </div>
+      <div class="uk-margin">
+        <label
+          ><input
+            v-model="model.config.triggerOnce"
+            class="uk-checkbox"
+            type="checkbox"
+            checked
+          /> Trigger once</label
+        >
+      </div>
+      <div class="uk-margin">
+        <div>
+          <label for="rootMargin">Root margin (<a class="link" href="https://www.npmjs.com/package/react-intersection-observer#options" target="_blank">more info</a>)</label>
         </div>
-        <div class="uk-margin">
-          <div>
-            <label for="transitionTimingFunction"
-              >Transition timing function</label
-            >
-          </div>
-          <select
-            class="uk-select"
-            v-model="model.transitionConfig.transitionTimingFunction"
-            id="transitionTimingFunction"
-            name="transitionTimingFunction"
-          >
-            <option value="ease">ease</option>
-            <option>ease-in</option>
-            <option>ease-out</option>
-            <option>ease-in-out</option>
-            <option>linear</option>
-          </select>
-        </div>
-        <div class="uk-margin">
-          <div>
-            <label for="transitionProperty">Transition property</label>
-          </div>
-          <input
-            disabled
-            v-model="model.transitionConfig.transitionProperty"
-            class="uk-input"
-            type="text"
-            id="transitionProperty"
-            name="transitionProperty"
-          />
-        </div>
+        <input
+        v-model="rootMargin[0]"
+          class="uk-width-1-4 uk-input uk-form-small"
+          type="number"
+          id="rootMargin-top"
+          name="rootMargin-top"
+        />
+        <input
+          v-model="rootMargin[1]"
+          class="uk-width-1-4 uk-input uk-form-small"
+          type="number"
+          id="rootMargin-right"
+          name="rootMargin-right"
+        />
+        <input
+          v-model="rootMargin[2]"
+          class="uk-width-1-4 uk-input uk-form-small"
+          type="number"
+          id="rootMargin-bottom"
+          name="rootMargin-bottom"
+        />
+        <input
+          v-model="rootMargin[3]"
+          class="uk-width-1-4 uk-input uk-form-small"
+          type="number"
+          id="rootMargin-left"
+          name="rootMargin-left"
+        />
       </div>
     </div>
-    <div v-else-if="model.type === 'inline styles'">
-      Here inline styles
-    </div>
-    <div v-else>
-      Choose animation strategy
+    <h5 class="transition-settings__heading">Transition settings</h5>
+    <div class="transition-settings">
+      <div class="uk-margin">
+        <div>
+          <label for="duration">Duration (ms)</label>
+        </div>
+        <input
+          v-model="model.transitionConfig.duration"
+          class="uk-input"
+          type="number"
+          id="duration"
+          name="duration"
+        />
+      </div>
+      <div class="uk-margin">
+        <div>
+          <label for="delay">Delay (ms)</label>
+        </div>
+        <input
+          v-model="model.transitionConfig.delay"
+          class="uk-input"
+          type="number"
+          id="delay"
+          name="delay"
+        />
+      </div>
+      <div class="uk-margin">
+        <div>
+          <label for="transitionTimingFunction"
+            >Transition timing function</label
+          >
+        </div>
+        <select
+          class="uk-select"
+          v-model="model.transitionConfig.transitionTimingFunction"
+          id="transitionTimingFunction"
+          name="transitionTimingFunction"
+        >
+          <option value="ease">ease</option>
+          <option>ease-in</option>
+          <option>ease-out</option>
+          <option>ease-in-out</option>
+          <option>linear</option>
+        </select>
+      </div>
+      <div class="uk-margin">
+        <div>
+          <label for="transitionProperty">Transition property</label>
+        </div>
+        <input
+          disabled
+          v-model="model.transitionConfig.transitionProperty"
+          class="uk-input"
+          type="text"
+          id="transitionProperty"
+          name="transitionProperty"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -94,6 +129,7 @@ export default {
   mixins: [window.Storyblok.plugin],
   data: function() {
     return {
+      rootMargin: [0, 0, 0, 0],
       title: "fading plugin"
     };
   },
@@ -103,18 +139,20 @@ export default {
         // needs to be equal to your storyblok plugin name
         plugin: "ef-component-fade-plugin",
         classNames: {
-          before: `before-effect-name`,
-          after: `after-effect-name`
+          before: `before-fade`,
+          after: `after-fade`
         },
         transitionConfig: {
           duration: 500,
           transitionProperty: "opacity",
-          transitionTimingFunction: "ease"
+          transitionTimingFunction: "ease",
+          delay: 200
         },
         config: {
-          threshold: 0
+          triggerOnce: false,
+          threshold: 0,
+          rootMargin: `${this.rootMargin[0]}px ${this.rootMargin[1]}px ${this.rootMargin[2]}px ${this.rootMargin[3]}px`
         },
-        type: "",
         effect: "fade"
       };
     },
@@ -123,17 +161,6 @@ export default {
       console.log(
         "View source and customize: https://github.com/storyblok/storyblok-fieldtype"
       );
-      console.log("fade plugin created");
-    },
-    onEffectChange(event) {
-      this.classNames = {
-        before: `before-${event.target.value}`,
-        after: `after-${event.target.value}`
-      };
-      this.$emit("changed-model", {
-        ...this.model,
-        classNames: this.classNames
-      });
     }
   },
   watch: {
@@ -142,6 +169,15 @@ export default {
         this.$emit("changed-model", value);
       },
       deep: true
+    },
+    rootMargin: {
+      handler: function(value) {
+        console.log(value);
+        this.model.config.rootMargin = `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
+
+        // this.$emit("changed-model", {...this.model, rootMargin: `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`});
+
+      }
     }
   }
 };
@@ -153,7 +189,31 @@ export default {
   flex-direction: column;
 }
 
+.link:hover {
+  color: #09b3af;
+}
+
 .uk-range--label {
   margin-left: 16px;
+}
+
+.intersection-observer-settings__heading {
+  margin: 16px 0 0 0;
+  padding: 0;
+}
+
+.intersection-observer-settings {
+  border: 1px outset #e9e9e9;
+  padding: 16px;
+}
+
+.transition-settings__heading {
+  margin: 16px 0 0 0;
+  padding: 0;
+}
+
+.transition-settings {
+  border: 1px outset #e9e9e9;
+  padding: 16px;
 }
 </style>
