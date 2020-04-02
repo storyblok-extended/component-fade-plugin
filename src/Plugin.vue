@@ -28,7 +28,7 @@
           /> Trigger once</label
         >
       </div>
-      <div class="uk-margin">
+      <!-- <div class="uk-margin">
         <div>
           <label for="rootMargin">Root margin (<a class="link" href="https://www.npmjs.com/package/react-intersection-observer#options" target="_blank">more info</a>)</label>
         </div>
@@ -60,7 +60,7 @@
           id="rootMargin-left"
           name="rootMargin-left"
         />
-      </div>
+      </div> -->
     </div>
     <h5 class="transition-settings__heading">Transition settings</h5>
     <div class="transition-settings">
@@ -129,7 +129,7 @@ export default {
   mixins: [window.Storyblok.plugin],
   data: function() {
     return {
-      rootMargin: [0, 0, 0, 0],
+      // rootMargin: [0, 0, 0, 0],
       title: "fading plugin"
     };
   },
@@ -151,7 +151,7 @@ export default {
         config: {
           triggerOnce: false,
           threshold: 0,
-          rootMargin: `${this.rootMargin[0]}px ${this.rootMargin[1]}px ${this.rootMargin[2]}px ${this.rootMargin[3]}px`
+          // rootMargin: `0px 0px 0px 0px`
         },
         effect: "fade"
       };
@@ -170,15 +170,12 @@ export default {
       },
       deep: true
     },
-    rootMargin: {
-      handler: function(value) {
-        console.log(value);
-        this.model.config.rootMargin = `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
-
-        // this.$emit("changed-model", {...this.model, rootMargin: `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`});
-
-      }
-    }
+    // rootMargin: {
+    //   handler: function(value) {
+    //     console.log(value);
+    //     this.model.config.rootMargin = `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
+    //   }
+    // }
   }
 };
 </script>
