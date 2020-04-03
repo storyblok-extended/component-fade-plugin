@@ -1,34 +1,45 @@
 <template>
   <div class="container">
-    <h5 class="intersection-observer-settings__heading">
-      Intersection observer settings
-    </h5>
-    <div class="intersection-observer-settings">
-      <div class="uk-margin">
-        <div>
-          <label for="threshold">Threshold</label>
-        </div>
-        <input
-          class="uk-range"
-          type="range"
-          v-model="model.config.threshold"
-          min="0"
-          max="1"
-          step="0.1"
+    <div class="uk-margin">
+      <label
+        ><input
+          v-model="model.enabled"
+          class="uk-checkbox"
+          type="checkbox"
         />
-        <span class="uk-range--label">{{ model.config.threshold }}</span>
-      </div>
-      <div class="uk-margin">
-        <label
-          ><input
-            v-model="model.config.triggerOnce"
-            class="uk-checkbox"
-            type="checkbox"
-            checked
-          /> Trigger once</label
-        >
-      </div>
-      <!-- <div class="uk-margin">
+        Enable transition</label
+      >
+    </div>
+    <template v-if="model.enabled">
+      <h5 class="intersection-observer-settings__heading">
+        Intersection observer settings
+      </h5>
+      <div class="intersection-observer-settings">
+        <div class="uk-margin">
+          <div>
+            <label for="threshold">Threshold</label>
+          </div>
+          <input
+            class="uk-range"
+            type="range"
+            v-model="model.config.threshold"
+            min="0"
+            max="1"
+            step="0.1"
+          />
+          <span class="uk-range--label">{{ model.config.threshold }}</span>
+        </div>
+        <div class="uk-margin">
+          <label
+            ><input
+              v-model="model.config.triggerOnce"
+              class="uk-checkbox"
+              type="checkbox"
+            />
+            Trigger once</label
+          >
+        </div>
+        <!-- <div class="uk-margin">
         <div>
           <label for="rootMargin">Root margin (<a class="link" href="https://www.npmjs.com/package/react-intersection-observer#options" target="_blank">more info</a>)</label>
         </div>
@@ -61,66 +72,67 @@
           name="rootMargin-left"
         />
       </div> -->
-    </div>
-    <h5 class="transition-settings__heading">Transition settings</h5>
-    <div class="transition-settings">
-      <div class="uk-margin">
-        <div>
-          <label for="duration">Duration (ms)</label>
-        </div>
-        <input
-          v-model="model.transitionConfig.duration"
-          class="uk-input"
-          type="number"
-          id="duration"
-          name="duration"
-        />
       </div>
-      <div class="uk-margin">
-        <div>
-          <label for="delay">Delay (ms)</label>
+      <h5 class="transition-settings__heading">Transition settings</h5>
+      <div class="transition-settings">
+        <div class="uk-margin">
+          <div>
+            <label for="duration">Duration (ms)</label>
+          </div>
+          <input
+            v-model="model.transitionConfig.duration"
+            class="uk-input"
+            type="number"
+            id="duration"
+            name="duration"
+          />
         </div>
-        <input
-          v-model="model.transitionConfig.delay"
-          class="uk-input"
-          type="number"
-          id="delay"
-          name="delay"
-        />
-      </div>
-      <div class="uk-margin">
-        <div>
-          <label for="transitionTimingFunction"
-            >Transition timing function</label
+        <div class="uk-margin">
+          <div>
+            <label for="delay">Delay (ms)</label>
+          </div>
+          <input
+            v-model="model.transitionConfig.delay"
+            class="uk-input"
+            type="number"
+            id="delay"
+            name="delay"
+          />
+        </div>
+        <div class="uk-margin">
+          <div>
+            <label for="transitionTimingFunction"
+              >Transition timing function</label
+            >
+          </div>
+          <select
+            class="uk-select"
+            v-model="model.transitionConfig.transitionTimingFunction"
+            id="transitionTimingFunction"
+            name="transitionTimingFunction"
           >
+            <option value="ease">ease</option>
+            <option>ease-in</option>
+            <option>ease-out</option>
+            <option>ease-in-out</option>
+            <option>linear</option>
+          </select>
         </div>
-        <select
-          class="uk-select"
-          v-model="model.transitionConfig.transitionTimingFunction"
-          id="transitionTimingFunction"
-          name="transitionTimingFunction"
-        >
-          <option value="ease">ease</option>
-          <option>ease-in</option>
-          <option>ease-out</option>
-          <option>ease-in-out</option>
-          <option>linear</option>
-        </select>
-      </div>
-      <div class="uk-margin">
-        <div>
-          <label for="transitionProperty">Transition property</label>
+        <div class="uk-margin">
+          <div>
+            <label for="transitionProperty">Transition property</label>
+          </div>
+          <input
+            disabled
+            v-model="model.transitionConfig.transitionProperty"
+            class="uk-input"
+            type="text"
+            id="transitionProperty"
+            name="transitionProperty"
+          />
         </div>
-        <input
-          disabled
-          v-model="model.transitionConfig.transitionProperty"
-          class="uk-input"
-          type="text"
-          id="transitionProperty"
-          name="transitionProperty"
-        />
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -149,11 +161,12 @@ export default {
           delay: 200
         },
         config: {
-          triggerOnce: false,
-          threshold: 0,
+          triggerOnce: true,
+          threshold: 1
           // rootMargin: `0px 0px 0px 0px`
         },
-        effect: "fade"
+        effect: "fade",
+        enabled: false
       };
     },
     pluginCreated() {
@@ -169,7 +182,7 @@ export default {
         this.$emit("changed-model", value);
       },
       deep: true
-    },
+    }
     // rootMargin: {
     //   handler: function(value) {
     //     console.log(value);
