@@ -149,7 +149,7 @@ export default {
     initWith() {
       return {
         // needs to be equal to your storyblok plugin name
-        plugin: "ef-component-fade-plugin",
+        plugin: "component-fade-plugin",
         classNames: {
           before: `before-fade`,
           after: `after-fade`

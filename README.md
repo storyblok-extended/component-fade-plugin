@@ -1,14 +1,14 @@
-# Storyblok EF Component Fade plugin
+# Storyblok Component Fade plugin
 
 ## Installing the plugin in your storyblok space 
-To use EF Component Fade plugin you need to compile and minify the plugin. But first you need to change name of the plugin.
+To use Component Fade plugin you need to compile and minify the plugin. But first you need to change name of the plugin.
 Go to `./src/` and open `Plugin.vue`.
 You need to prefix plugin name, with for example name of your department:
 ```
 initWith() {
       return {
         // needs to be equal to your storyblok plugin name
-        plugin: "department_name-ef-component-fade"
+        plugin: "department_name-component-fade"
       };
     },
 ```
@@ -36,7 +36,7 @@ The output of the plugin has following structure:
 
 ```
 {
-  "plugin": "ef-component-fade-plugin",
+  "plugin": "component-fade-plugin",
   "classNames": {
     "before": "before-fade",
     "after": "after-fade"
