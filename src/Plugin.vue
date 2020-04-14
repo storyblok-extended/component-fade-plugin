@@ -162,7 +162,7 @@ export default {
         },
         config: {
           triggerOnce: true,
-          threshold: 1
+          threshold: 0.3
           // rootMargin: `0px 0px 0px 0px`
         },
         effect: "fade",
