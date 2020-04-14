@@ -33,6 +33,17 @@
             name="delay"
           />
         </div>
+        <div class="uk-margin">
+              <label
+                ><input
+                  v-model="model.enabledOnMobile"
+                  class="uk-checkbox"
+                  type="checkbox"
+                  checked
+                />
+                Enabled on mobile</label
+              >
+            </div>
         <div>
           <button class="uk-button" @click="toggleMoreOptions">
             {{ moreOptions ? "Less options..." : "More options..." }}
@@ -139,6 +150,7 @@ export default {
           // rootMargin: `0px 0px 0px 0px`
         },
         effect: "fade",
+        enabledOnMobile: true,
         enabled: false,
       };
     },
